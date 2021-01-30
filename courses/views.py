@@ -5,7 +5,7 @@ from .models import Course
 
 
 def home_page(request):
-    return HttpResponse("Test page")
+    return render(request, 'courses/home.html')
 
 def courses(request, course_id):
     pass
