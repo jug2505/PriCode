@@ -7,9 +7,11 @@
 
 - home.html:
     
-    article_titles: Массив названий статей, строка
+    article_titles: Массив названий статей
 
-    article_texts: Массив обрезанных статей, строка
+    article_texts: Массив обрезанных статей
+
+    article_ids: Массив id статей
 
 Схема БД:
 
