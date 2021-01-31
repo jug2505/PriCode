@@ -23,5 +23,12 @@ def home_page(request):
         request, 'courses/home.html', 
         {'article_titles': article_titles, 'article_texts': article_texts})
 
+def article_add(request):
+    if request.method == 'POST':
+        # TODO: Создание объектов. Нужны id с фронта
+        return redirect('courses/home.html')
+
+    return render(request, 'courses/article_add.html')
+
 def courses(request, course_id):
     pass
