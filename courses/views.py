@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Course
+from .models import Article
 
 
 def home_page(request):
