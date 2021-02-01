@@ -34,3 +34,6 @@
     choice_text: String
    
     choise_isRight: Boolean
+ - Для добавления статьи:
+    всего три вопроса к статье, каждый имеет номер: question1_text и тд
+    к каждому вопроса по 3 варианта ответа: choice1_text и тд
