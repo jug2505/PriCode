@@ -10,17 +10,64 @@
     <body>
 
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-            TODO: Сделать навигацию
+            <ul class="nav navbar-nav mr-auto">
+      <li class="nav-item">
+          <a class="nav-link" href="home.html"><h5><kbd>PriCode</kbd></h5></a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="course.html">Каталог курсов</a>
+      </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+    </svg></button>
+            </form>
         </nav>
 
-        <div id="content">
-            {% block content %}{% endblock %}
+        <div class="jumbotron">
+  <div class="container">
+
+    <p class="font-italic">Наша образовательная платформа позволит Вам и Вашим близким с лёгкостью осваивать
+        материалы по английскому языку и программированию. Для успешного прохождения и освоения материала на
+        сайте представлены следующие возможности: закрепление материала с помощью тестов после каждой главы,
+        возможность соревноваться с другими участниками курсов и т.д.
+        Также мы всегда готовы ответить на Ваши вопросы и помочь Вам в чате с нашими специалистами. Удачи и успехов в обучении!</p>
+  </div>
+
+<div id="123" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="container">
+        <div class="row">
+          <div class="col"><img class="d-block w-100" src="https://cs9.pikabu.ru/post_img/big/2016/11/26/8/148016431011153801.jpg" alt="Первый слайд"></div>
+          <div class="col"><img class="d-block w-100" src="https://www.etoday.ru/assets/2016/10/25/rogueoneposters8-900x1286.jpg" alt="Первый слайд"></div>
+          <div class="col"><img class="d-block w-100" src="https://www.kino-teatr.ru/movie/poster/131208/96737.jpg" alt="Первый слайд"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+        </div>
         </div>
 
-        <footer>
-            <hr />
-            <p>&copy; 2021 - PriCode</p>
-        </footer>
+            <footer>
+  <p>  &copy; Все права защищены 2021</p>
+</footer>
 
     </body>
 </html>
