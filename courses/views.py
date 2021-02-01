@@ -35,5 +35,5 @@ def article_add(request):
 
     return render(request, 'courses/article_add.html')
 
-def courses(request, course_id):
+def articles(request, course_id):
     pass
