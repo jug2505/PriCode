@@ -6,8 +6,9 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     
         <title>{% block title %}PriCode{% endblock %}</title>
+        <link rel="shortcut icon" href="https://w7.pngwing.com/pngs/329/915/png-transparent-computer-icons-educational-technology-learning-training-course-training-blue-angle-people.png" type="image/x-icon">
     </head>
-    <body>
+  <body style="background-image: url(https://images.wallpaperscraft.ru/image/seryj_odnotonnyj_fon_138531_300x168.jpg);">
 
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <ul class="nav navbar-nav mr-auto">
@@ -15,7 +16,10 @@
           <a class="nav-link" href="{% url 'home' %}"><h5><kbd>PriCode</kbd></h5></a>
       </li>
        <li class="nav-item">
-        <a class="nav-link" href="course.html">Каталог курсов</a>
+        <a class="nav-link" href="">Каталог статей</a>
+      </li>
+                <li class="nav-item">
+        <a class="nav-link" href="{% url 'article_add' %}">Добавить статью</a>
       </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -27,47 +31,10 @@
             </form>
         </nav>
 
-        <div class="jumbotron">
-  <div class="container">
-
-    <p class="font-italic">Наша образовательная платформа позволит Вам и Вашим близким с лёгкостью осваивать
-        материалы по английскому языку и программированию. Для успешного прохождения и освоения материала на
-        сайте представлены следующие возможности: закрепление материала с помощью тестов после каждой главы,
-        возможность соревноваться с другими участниками курсов и т.д.
-        Также мы всегда готовы ответить на Ваши вопросы и помочь Вам в чате с нашими специалистами. Удачи и успехов в обучении!</p>
-  </div>
-
-<div id="123" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <div class="container">
-        <div class="row">
-          <div class="col"><img class="d-block w-100" src="https://cs9.pikabu.ru/post_img/big/2016/11/26/8/148016431011153801.jpg" alt="Первый слайд"></div>
-          <div class="col"><img class="d-block w-100" src="https://www.etoday.ru/assets/2016/10/25/rogueoneposters8-900x1286.jpg" alt="Первый слайд"></div>
-          <div class="col"><img class="d-block w-100" src="https://www.kino-teatr.ru/movie/poster/131208/96737.jpg" alt="Первый слайд"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-        </div>
-        </div>
-
+        {% block content %}
+        {% endblock %}
             <footer>
   <p>  &copy; Все права защищены 2021</p>
 </footer>
-
     </body>
 </html>
