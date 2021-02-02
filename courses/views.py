@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from .models import Article, Question, Choice
@@ -29,11 +29,45 @@ def home_page(request):
             })
 
 def article_add(request):
-    if request.method == 'POST':
-        # TODO: Создание объектов. Нужны id с фронта
-        return redirect('courses/home.html')
+    if request.method != 'POST':
+        return render(request, 'courses/article_add.html')
+    
+    article = Article.objects.create(
+        article_title=request.POST['article_title'], 
+        article_text=request.POST['article_text'])
 
-    return render(request, 'courses/article_add.html')
+    question1 = Question.objects.create(
+        article=article,
+        question_text=request.POST['question1_text'])
+    
+    question2 = Question.objects.create(
+        article=article,
+        question_text=request.POST['question2_text'])
 
+    question3 = Question.objects.create(
+        article=article,
+        question_text=request.POST['question3_text'])
+
+    for i in range(1, 5, 1):
+        Choice.objects.create(
+            question=question1,
+            choice_text=request.POST['q1_choice'+ str(i) + '_text'],
+            choise_isRight=request.POST['blankRadio1']==str(i))
+    
+    for i in range(1, 5, 1):
+        Choice.objects.create(
+            question=question2,
+            choice_text=request.POST['q2_choice'+ str(i) + '_text'],
+            choise_isRight=request.POST['blankRadio2']==str(i))
+
+    for i in range(1, 5, 1):
+        Choice.objects.create(
+            question=question3,
+            choice_text=request.POST['q3_choice'+ str(i) + '_text'],
+            choise_isRight=request.POST['blankRadio3']==str(i))
+    
+    return redirect('home')
+
+    
 def articles(request, course_id):
     pass

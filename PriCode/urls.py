@@ -21,6 +21,6 @@ from courses import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home_page, name='home'),
-    path('articles/add', views.article_add, name='article_add'),
+    path('article/add', views.article_add, name='article_add'),
     path('articles/<int:article_id>/', views.articles, name='detail'),
 ]
