@@ -7,7 +7,7 @@ from .models import Article, Question, Choice
 class HomeData:
     def __init__(self, article_text, article_title, article_id):
         self.article_title = article_title
-        self.article_text = article_title
+        self.article_text = article_text
         self.article_id = article_id
 
 
