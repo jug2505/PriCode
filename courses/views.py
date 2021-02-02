@@ -6,14 +6,14 @@ from .models import Article, Question, Choice
 
 def home_page(request):    
     maxlen = 40 # Длина обрезанной статьи
-    num_of_articles = 10 # Кол-во статей на странице
+    num_of_articles = 3 # Кол-во статей на странице
 
     article_titles = []
     article_texts = []
     article_ids = []
     
-    # Возвращает последние 10 статей
-    for item in Article.objects.all().order_by('-id')[:10]:
+    # Возвращает последние 3 статьи
+    for item in Article.objects.all().order_by('-id')[:num_of_articles]:
         article_titles.append(item.article_title)
         article_ids.append(item.id)
         if (len(item.article_text) > maxlen):
