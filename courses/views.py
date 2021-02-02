@@ -71,3 +71,21 @@ def article_add(request):
     
 def articles(request, course_id):
     pass
+
+
+def catalog(request):
+
+    article_titles = []
+    article_texts = []
+    article_ids = []
+
+    for item in Article.objects.all().order_by('-id'):
+        article_titles.append(item.article_title)
+        article_ids.append(item.id)
+
+    return render(
+        request, 'courses/catalog.html', {
+            'article_titles': article_titles,
+            'article_texts': article_texts,
+            'article_ids': article_ids
+        })
