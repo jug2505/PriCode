@@ -6,12 +6,14 @@
 Для фронта:
 
 - home.html:
+
+    articles: Массив статей для показа на главной
     
-    article_titles: Массив названий статей
+    articles.article_titles: Название
 
-    article_texts: Массив обрезанных статей
+    articles.article_texts: Текст
 
-    article_ids: Массив id статей
+    articles.article_ids: id статьи
 
 Схема БД:
 
@@ -34,6 +36,3 @@
     choice_text: String
    
     choise_isRight: Boolean
- - Для добавления статьи:
-    всего три вопроса к статье, каждый имеет номер: question1_text и тд
-    к каждому вопроса по 3 варианта ответа: choice1_text и тд

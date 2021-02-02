@@ -4,29 +4,34 @@ from django.http import HttpResponse
 from .models import Article, Question, Choice
 
 
+class HomeData:
+    def __init__(self, article_text, article_title, article_id):
+        self.article_title = article_title
+        self.article_text = article_text
+        self.article_id = article_id
+
+
 def home_page(request):    
     maxlen = 40 # Длина обрезанной статьи
     num_of_articles = 3 # Кол-во статей на странице
 
-    article_titles = []
-    article_texts = []
-    article_ids = []
+    data = []
     
     # Возвращает последние 3 статьи
     for item in Article.objects.all().order_by('-id')[:num_of_articles]:
-        article_titles.append(item.article_title)
-        article_ids.append(item.id)
         if (len(item.article_text) > maxlen):
-            article_texts.append(item.article_text[:maxlen])
+            data.append(HomeData(
+                article_title=item.article_title, 
+                article_text=item.article_text[:maxlen], 
+                article_id=item.id))
         else:
-            article_texts.append(item.article_text)
+            data.append(HomeData(
+                article_title=item.article_title, 
+                article_text=item.article_text, 
+                article_id=item.id))
 
-    return render(
-        request, 'courses/home.html', {
-            'article_titles': article_titles,
-            'article_texts': article_texts,
-            'article_ids': article_ids
-            })
+    return render(request, 'courses/home.html', {'articles': data})
+
 
 def article_add(request):
     if request.method != 'POST':
@@ -71,3 +76,21 @@ def article_add(request):
     
 def articles(request, course_id):
     pass
+
+
+def catalog(request):
+
+    article_titles = []
+    article_texts = []
+    article_ids = []
+
+    for item in Article.objects.all().order_by('-id'):
+        article_titles.append(item.article_title)
+        article_ids.append(item.id)
+
+    return render(
+        request, 'courses/catalog.html', {
+            'article_titles': article_titles,
+            'article_texts': article_texts,
+            'article_ids': article_ids
+        })
