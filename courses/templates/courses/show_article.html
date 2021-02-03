@@ -8,15 +8,21 @@
     <br>{{ article.article_text }}</br>
     <h1>Проверьте себя!</h1>
     <from>
-        {% for qst in article.questions_text %}
-            <h4> {{ qst }}</h4>
-            {% for choice in article.choices %}
-                <input type="radio" name={{ question }}>
-                    {{ choice }}
-                </input>
+        <div>
+            {% for qst in article.questions %}
+                <h4> {{ qst.question_text }}</h4>
+                {% for choice in qst.choices %}
+                    <input type="radio" name={{qst.question_id}} value={{choice.choice_id}}>
+                        {{ choice.choice_text }}
+                    </input>
+                    <br>
+                {% endfor %}
+                <hr>
             {% endfor %}
-            <hr>
-        {% endfor %}
+        </div>
+        <div>
+            <button type="submit">Отправить</button>
+        </div>
     </from>
 </div>
 

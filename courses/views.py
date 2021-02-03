@@ -12,13 +12,15 @@ class HomeData:
 
 
 class ChoiceData:
-    def __init__(self, choice_text, choise_isRight):
+    def __init__(self, choice_id, choice_text, choise_isRight):
+        self.choice_id = choice_id
         self.choice_text = choice_text
         self.choise_isRight = choise_isRight
 
 
 class QuestionData:
-    def __init__(self, question_text, choices):
+    def __init__(self, question_id, question_text, choices):
+        self.question_id = question_id
         self.question_text = question_text
         self.choices = choices
 
@@ -122,14 +124,14 @@ def show_article(request, article_id):
     info_question = Question.objects.all().filter(article=info)
 
     for question in info_question:
-        questions_text.append(question.question_text)
         choices = Choice.objects.all().filter(question=question)
         choices_data = []
         for choice in choices:
             choices_data.append(ChoiceData(
-                choice_text=choice.choice_text, choise_isRight=choice.choise_isRight))
-        
-        questions_data.append(QuestionData(question_text=question.question_text, choices=choices_data))
+                choice_id=choice.id, choice_text=choice.choice_text, choise_isRight=choice.choise_isRight))
+
+        questions_data.append(QuestionData(
+            question_id=question.id, question_text=question.question_text, choices=choices_data))
 
     data = ArticleData(
         article_id=article_id,
