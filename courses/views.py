@@ -83,7 +83,6 @@ def catalog(request):
     maxlen = 40 # Длина обрезанной статьи
     data = []
     
-    # Возвращает последние 3 статьи
     for item in Article.objects.all().order_by('-id'):
         if (len(item.article_text) > maxlen):
             data.append(HomeData(
@@ -96,4 +95,4 @@ def catalog(request):
                 article_text=item.article_text, 
                 article_id=item.id))
 
-    return render(request, 'courses/home.html', {'articles': data})
+    return render(request, 'courses/catalog.html', {'articles': data})
