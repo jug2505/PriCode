@@ -80,17 +80,20 @@ def articles(request, course_id):
 
 def catalog(request):
 
-    article_titles = []
-    article_texts = []
-    article_ids = []
-
+    maxlen = 40 # Длина обрезанной статьи
+    data = []
+    
+    # Возвращает последние 3 статьи
     for item in Article.objects.all().order_by('-id'):
-        article_titles.append(item.article_title)
-        article_ids.append(item.id)
+        if (len(item.article_text) > maxlen):
+            data.append(HomeData(
+                article_title=item.article_title, 
+                article_text=item.article_text[:maxlen], 
+                article_id=item.id))
+        else:
+            data.append(HomeData(
+                article_title=item.article_title, 
+                article_text=item.article_text, 
+                article_id=item.id))
 
-    return render(
-        request, 'courses/catalog.html', {
-            'article_titles': article_titles,
-            'article_texts': article_texts,
-            'article_ids': article_ids
-        })
+    return render(request, 'courses/home.html', {'articles': data})
