@@ -7,7 +7,7 @@
 <h1>{{ article.article_title }}</h1>
     <br>{{ article.article_text }}</br>
     <h1>Проверьте себя!</h1>
-    <from>
+    <form method="POST"> {% csrf_token %}
         <div>
             {% for qst in article.questions %}
                 <h4> {{ qst.question_text }}</h4>
@@ -20,10 +20,8 @@
                 <hr>
             {% endfor %}
         </div>
-        <div>
-            <button type="submit">Отправить</button>
-        </div>
-    </from>
+        <input type="submit"></input>
+    </form>
 </div>
 
 {% endblock %}

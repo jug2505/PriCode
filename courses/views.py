@@ -13,14 +13,14 @@ class HomeData:
 
 class ChoiceData:
     def __init__(self, choice_id, choice_text, choise_isRight):
-        self.choice_id = choice_id
+        self.choice_id = choice_id # для идентификации конкретного ответа и его сравнения
         self.choice_text = choice_text
         self.choise_isRight = choise_isRight
 
 
 class QuestionData:
     def __init__(self, question_id, question_text, choices):
-        self.question_id = question_id
+        self.question_id = question_id # для идентификации группы радиокнопок
         self.question_text = question_text
         self.choices = choices
 
@@ -134,9 +134,9 @@ def show_article(request, article_id):
             question_id=question.id, question_text=question.question_text, choices=choices_data))
 
     data = ArticleData(
-        article_id=article_id,
-        article_text=article_text,
-        article_title=article_title,
-        questions=questions_data,)
+        article_id=article_id, # содержит айди статьи, которая будет просматриваться
+        article_text=article_text, # текст этой статьи
+        article_title=article_title, # название статьи
+        questions=questions_data,) # вопросы к статье. Вопросы содержат список вариантов ответа
 
     return render(request, 'courses/show_article.html', {'article': data})
