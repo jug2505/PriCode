@@ -10,6 +10,7 @@ class HomeData:
         self.article_text = article_text
         self.article_id = article_id
 
+
 class ChoiceData:
     def __init__(self, choice_text, choise_isRight):
         self.choice_text = choice_text
@@ -25,24 +26,23 @@ class QueData:
         self.choices = choices
 
 
-
-def home_page(request):    
-    maxlen = 40 # Длина обрезанной статьи
-    num_of_articles = 3 # Кол-во статей на странице
+def home_page(request):
+    maxlen = 40  # Длина обрезанной статьи
+    num_of_articles = 3  # Кол-во статей на странице
 
     data = []
-    
+
     # Возвращает последние 3 статьи
     for item in Article.objects.all().order_by('-id')[:num_of_articles]:
         if (len(item.article_text) > maxlen):
             data.append(HomeData(
-                article_title=item.article_title, 
-                article_text=item.article_text[:maxlen], 
+                article_title=item.article_title,
+                article_text=item.article_text[:maxlen],
                 article_id=item.id))
         else:
             data.append(HomeData(
-                article_title=item.article_title, 
-                article_text=item.article_text, 
+                article_title=item.article_title,
+                article_text=item.article_text,
                 article_id=item.id))
 
     return render(request, 'courses/home.html', {'articles': data})
@@ -51,15 +51,15 @@ def home_page(request):
 def article_add(request):
     if request.method != 'POST':
         return render(request, 'courses/article_add.html')
-    
+
     article = Article.objects.create(
-        article_title=request.POST['article_title'], 
+        article_title=request.POST['article_title'],
         article_text=request.POST['article_text'])
 
     question1 = Question.objects.create(
         article=article,
         question_text=request.POST['question1_text'])
-    
+
     question2 = Question.objects.create(
         article=article,
         question_text=request.POST['question2_text'])
@@ -71,61 +71,67 @@ def article_add(request):
     for i in range(1, 5, 1):
         Choice.objects.create(
             question=question1,
-            choice_text=request.POST['q1_choice'+ str(i) + '_text'],
-            choise_isRight=request.POST['blankRadio1']==str(i))
-    
+            choice_text=request.POST['q1_choice' + str(i) + '_text'],
+            choise_isRight=request.POST['blankRadio1'] == str(i))
+
     for i in range(1, 5, 1):
         Choice.objects.create(
             question=question2,
-            choice_text=request.POST['q2_choice'+ str(i) + '_text'],
-            choise_isRight=request.POST['blankRadio2']==str(i))
+            choice_text=request.POST['q2_choice' + str(i) + '_text'],
+            choise_isRight=request.POST['blankRadio2'] == str(i))
 
     for i in range(1, 5, 1):
         Choice.objects.create(
             question=question3,
-            choice_text=request.POST['q3_choice'+ str(i) + '_text'],
-            choise_isRight=request.POST['blankRadio3']==str(i))
-    
+            choice_text=request.POST['q3_choice' + str(i) + '_text'],
+            choise_isRight=request.POST['blankRadio3'] == str(i))
+
     return redirect('home')
 
-    
+
 def articles(request, course_id):
     pass
 
 
 def catalog(request):
 
-    maxlen = 40 # Длина обрезанной статьи
+    maxlen = 40  # Длина обрезанной статьи
     data = []
-    
+
     for item in Article.objects.all().order_by('-id'):
         if (len(item.article_text) > maxlen):
             data.append(HomeData(
-                article_title=item.article_title, 
-                article_text=item.article_text[:maxlen], 
+                article_title=item.article_title,
+                article_text=item.article_text[:maxlen],
                 article_id=item.id))
         else:
             data.append(HomeData(
-                article_title=item.article_title, 
-                article_text=item.article_text, 
+                article_title=item.article_title,
+                article_text=item.article_text,
                 article_id=item.id))
 
     return render(request, 'courses/catalog.html', {'articles': data})
 
 
 def show_article(request, article_id):
-    info = Article.objects.get(id = article_id)
+    info = Article.objects.get(id=article_id)
     article_title = info.article_title
     article_text = info.article_text
     questions_text = []
     choices_data = []
-    info_question = Question.objects.all().filter(article = info)
+    info_question = Question.objects.all().filter(article=info)
     for question in info_question:
         questions_text.append(question.question_text)
         choices = Choice.objects.all().filter(question=question)
         for choice in choices:
-            choices_data.append(ChoiceData(choice_text = choice.choice_text, choise_isRight = choice.choise_isRight))
+            choices_data.append(ChoiceData(
+                choice_text=choice.choice_text, choise_isRight=choice.choise_isRight))
 
-    data = QueData(article_id = article_id, article_text=article_text, article_title=article_title, questions_text=questions_text,choices=choices_data)
+    data = QueData(
+        article_id=article_id,
+        article_text=article_text,
+        article_title=article_title,
+        questions_text=questions_text,
+        choices=choices_data)
 
     return render(request, 'courses/show_article.html', {'article': data})
