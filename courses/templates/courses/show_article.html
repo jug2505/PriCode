@@ -1,0 +1,12 @@
+{% extends "courses/_Layout.html" %}
+{% block title %}Просмотр статьи{% endblock %}
+{% block content %}
+
+<div class = "jumbotron">
+
+<h1>{{ article.article_title }}</h1>
+    <br>{{ article.article_text }}</br>
+    <h1>Проверьте себя!</h1>
+</div>
+
+{% endblock %}

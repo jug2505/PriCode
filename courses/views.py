@@ -10,6 +10,21 @@ class HomeData:
         self.article_text = article_text
         self.article_id = article_id
 
+class ChoiceData:
+    def __init__(self, choice_text, choise_isRight):
+        self.choice_text = choice_text
+        self.choise_isRight = choise_isRight
+
+
+class QueData:
+    def __init__(self, questions_text, article_text, article_title, article_id, choices):
+        self.questions_text = questions_text
+        self.article_title = article_title
+        self.article_text = article_text
+        self.article_id = article_id
+        self.choices = choices
+
+
 
 def home_page(request):    
     maxlen = 40 # Длина обрезанной статьи
@@ -83,7 +98,6 @@ def catalog(request):
     maxlen = 40 # Длина обрезанной статьи
     data = []
     
-    # Возвращает последние 3 статьи
     for item in Article.objects.all().order_by('-id'):
         if (len(item.article_text) > maxlen):
             data.append(HomeData(
@@ -96,4 +110,22 @@ def catalog(request):
                 article_text=item.article_text, 
                 article_id=item.id))
 
-    return render(request, 'courses/home.html', {'articles': data})
+    return render(request, 'courses/catalog.html', {'articles': data})
+
+
+def show_article(request, article_id):
+    info = Article.objects.get(id = article_id)
+    article_title = info.article_title
+    article_text = info.article_text
+    questions_text = []
+    choices_data = []
+    info_question = Question.objects.all().filter(article = info)
+    for question in info_question:
+        questions_text.append(question.question_text)
+        choices = Choice.objects.all().filter(question=question)
+        for choice in choices:
+            choices_data.append(ChoiceData(choice_text = choice.choice_text, choise_isRight = choice.choise_isRight))
+
+    data = QueData(article_id = article_id, article_text=article_text, article_title=article_title, questions_text=questions_text,choices=choices_data)
+
+    return render(request, 'courses/show_article.html', {'article': data})

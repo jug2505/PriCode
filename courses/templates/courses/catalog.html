@@ -2,7 +2,25 @@
 {% block title %}Каталог курсов{% endblock %}
 {% block content %}
 
-
+  <div class="container">
+      <p></p>
+<div class="row">
+    {% for item in articles %}
+    <div class="col-sm-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.article_title }}</h5>
+          <p class="card-text">{{ item.article_text }}</p>
+          <a href="#" class="btn btn-dark">Ссылка на статью</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  </div>
+</div>
+</div>
+</div>
 
 
 
