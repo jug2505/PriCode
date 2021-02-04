@@ -140,6 +140,7 @@ def show_article(request, article_id):
         questions=questions_data,) # вопросы к статье. Вопросы содержат список вариантов ответа
 
     # проверка результатов
+    percent = -1; # изначально результата нет
     if request.POST: # если был получен POST запрос, то начинаем обрабатывать
         answers = dict(request.POST) # создаю копию, потому что запрос не может быть изменен
         answers.pop('csrfmiddlewaretoken') # удаляю из словаря csrf токен чтоб не мешался
@@ -148,9 +149,8 @@ def show_article(request, article_id):
             answers[key] = q[0].choise_isRight # заменяем id ответа на True | False
         
         # answers имеет структуру 'номер вопроса': bool
-        right_percent = sum(value == True for value in answers.values()) / len(answers) # число от 0 до 1
-        print(f"{right_percent: .0%}") # выводит в консоль процент правильных ответов
-        
-        # TODO: вывести результат на саму страницу
+        right = sum(value == True for value in answers.values()) / len(answers) # число от 0 до 1
+        percent = f"{right: .0%}" # выводит в консоль процент правильных ответов
+        print(percent)
     
-    return render(request, 'courses/show_article.html', {'article': data})
+    return render(request, 'courses/show_article.html', {'article': data, 'result': percent})
