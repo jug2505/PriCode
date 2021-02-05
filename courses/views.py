@@ -3,6 +3,7 @@ from django.http import HttpResponse
 
 from .models import Article, Question, Choice
 
+from django.db.models import Q
 
 class HomeData:
     def __init__(self, article_text, article_title, article_id):
@@ -98,10 +99,19 @@ def article_add(request):
 
 def catalog(request):
 
+    search_query = request.GET.get('search', '')
+
+    if search_query:
+        list_article = Article.objects.filter(Q(article_title__icontains=search_query) |
+                                              Q(article_title__icontains=search_query.capitalize()) |
+                                              Q(article_title__icontains=search_query.lower()))
+    else:
+        list_article = Article.objects.all()
+
     maxlen = 40  # Длина обрезанной статьи
     data = []
 
-    for item in Article.objects.all().order_by('-id'):
+    for item in list_article.order_by('-id'):
         if (len(item.article_text) > maxlen):
             data.append(HomeData(
                 article_title=item.article_title,
