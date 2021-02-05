@@ -3,21 +3,29 @@
 {% block content %}
 
 <div class = "jumbotron">
-
-<h1>{{ article.article_title }}</h1>
-    <br>{{ article.article_text }}</br>
+    <h1>{{ article.article_title }}</h1>
+    <p>{{ article.article_text }}</p>
     <h1>Проверьте себя!</h1>
-    <from>
-        {% for qst in article.questions_text %}
-            <h4> {{ qst }}</h4>
-            {% for choice in article.choices %}
-                <input type="radio" name={{ question }}>
-                    {{ choice }}
-                </input>
+    <form method="POST"> {% csrf_token %}
+        <div>
+            {% for qst in article.questions %}
+                <h4> {{ qst.question_text }}</h4>
+                {% for choice in qst.choices %}
+                    <input type="radio" name={{qst.question_id}} value={{choice.choice_id}} required>
+                        {{ choice.choice_text }}
+                    </input>
+                    <br>
+                {% endfor %}
+                <hr>
             {% endfor %}
-            <hr>
-        {% endfor %}
-    </from>
+        </div>
+        <input type="submit"></input>
+    </form>
+    {% if result != -1 %}
+        <br>
+        Ваш результат: {{ result }} правильных ответов
+    {% endif %}
 </div>
 
+{#    Текст тест #}
 {% endblock %}

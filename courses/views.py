@@ -13,18 +13,25 @@ class HomeData:
 
 
 class ChoiceData:
-    def __init__(self, choice_text, choise_isRight):
+    def __init__(self, choice_id, choice_text, choise_isRight):
+        self.choice_id = choice_id # для идентификации конкретного ответа и его сравнения
         self.choice_text = choice_text
         self.choise_isRight = choise_isRight
 
 
-class QueData:
-    def __init__(self, questions_text, article_text, article_title, article_id, choices):
-        self.questions_text = questions_text
+class QuestionData:
+    def __init__(self, question_id, question_text, choices):
+        self.question_id = question_id # для идентификации группы радиокнопок
+        self.question_text = question_text
+        self.choices = choices
+
+
+class ArticleData:
+    def __init__(self, questions, article_text, article_title, article_id):
+        self.questions = questions
         self.article_title = article_title
         self.article_text = article_text
         self.article_id = article_id
-        self.choices = choices
 
 
 def home_page(request):
@@ -90,10 +97,6 @@ def article_add(request):
     return redirect('home')
 
 
-def articles(request, course_id):
-    pass
-
-
 def catalog(request):
 
     search_query = request.GET.get('search', '')
@@ -127,21 +130,37 @@ def show_article(request, article_id):
     info = Article.objects.get(id=article_id)
     article_title = info.article_title
     article_text = info.article_text
-    questions_text = []
-    choices_data = []
+    questions_data = []
     info_question = Question.objects.all().filter(article=info)
+
     for question in info_question:
-        questions_text.append(question.question_text)
         choices = Choice.objects.all().filter(question=question)
+        choices_data = []
         for choice in choices:
             choices_data.append(ChoiceData(
-                choice_text=choice.choice_text, choise_isRight=choice.choise_isRight))
+                choice_id=choice.id, choice_text=choice.choice_text, choise_isRight=choice.choise_isRight))
 
-    data = QueData(
-        article_id=article_id,
-        article_text=article_text,
-        article_title=article_title,
-        questions_text=questions_text,
-        choices=choices_data)
+        questions_data.append(QuestionData(
+            question_id=question.id, question_text=question.question_text, choices=choices_data))
 
-    return render(request, 'courses/show_article.html', {'article': data})
+    data = ArticleData(
+        article_id=article_id, # содержит айди статьи, которая будет просматриваться
+        article_text=article_text, # текст этой статьи
+        article_title=article_title, # название статьи
+        questions=questions_data,) # вопросы к статье. Вопросы содержат список вариантов ответа
+
+    # проверка результатов
+    percent = -1; # изначально результата нет
+    if request.POST: # если был получен POST запрос, то начинаем обрабатывать
+        answers = dict(request.POST) # создаю копию, потому что запрос не может быть изменен
+        answers.pop('csrfmiddlewaretoken') # удаляю из словаря csrf токен чтоб не мешался
+        for key, value in answers.items(): # key - question_id
+            q = Choice.objects.all().filter(id=value[0]) # находим вариант ответа
+            answers[key] = q[0].choise_isRight # заменяем id ответа на True | False
+        
+        # answers имеет структуру 'номер вопроса': bool
+        right = sum(value == True for value in answers.values()) / len(answers) # число от 0 до 1
+        percent = f"{right: .0%}" # выводит в консоль процент правильных ответов
+        print(percent)
+    
+    return render(request, 'courses/show_article.html', {'article': data, 'result': percent})
